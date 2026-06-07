@@ -57,7 +57,9 @@ namespace ClientState {
             });
 
             manager.connect(kwinClient.minimizedChanged, () => {
-                console.assert(kwinClient.minimized);
+                if (!kwinClient.minimized) {
+                    return;
+                }
                 world.do((clientManager, desktopManager) => {
                     clientManager.minimizeClient(kwinClient);
                 });

@@ -14,7 +14,9 @@ namespace ClientState {
             const manager = new SignalManager();
 
             manager.connect(client.kwinClient.minimizedChanged, () => {
-                console.assert(!client.kwinClient.minimized);
+                if (client.kwinClient.minimized) {
+                    return;
+                }
                 world.do((clientManager, desktopManager) => {
                     const desktop = desktopManager.getDesktopForClient(client.kwinClient);
                     if (desktop !== undefined) {

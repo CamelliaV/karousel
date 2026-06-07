@@ -1,6 +1,20 @@
-# Karousel
-Scrollable tiling Kwin script. Works especially well with ultrawide screens.
+# Karousel (CamelliaV fork)
+Scrollable tiling KWin script. Works especially well with ultrawide screens.
 Use with [this](https://github.com/peterfajdiga/kwin4_effect_geometry_change) for animations.
+
+This fork focuses on preserving KDE's "initially minimized" window rule when
+Karousel manages a window. It is intended for silent startup workflows where an
+application should launch minimized but still become a normal Karousel-tiled
+window once the user restores it.
+
+## Fork changes
+- Keeps tileable windows minimized if KDE window rules start them minimized.
+- Tracks those windows in Karousel's existing `TiledMinimized` state instead of
+  calling the tiling setup path that unminimizes them.
+- Handles `minimizedChanged` directionally: tiled windows only react to
+  minimization, and minimized tiled windows only react to restoration.
+
+The upstream project is [peterfajdiga/karousel](https://github.com/peterfajdiga/karousel).
 
 https://github.com/peterfajdiga/karousel/assets/22796326/2ab62d18-09c7-45f9-8fda-e5e36b8d7a02
 

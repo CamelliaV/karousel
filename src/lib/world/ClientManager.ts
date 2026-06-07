@@ -39,9 +39,13 @@ class ClientManager {
             this.windowRuleEnforcer.shouldTile(kwinClient) &&
             (desktop = this.desktopManager.getDesktopForClient(kwinClient)) !== undefined
         ) {
-            Clients.makeTileable(kwinClient);
-            console.assert(Clients.canTileNow(kwinClient));
-            constructState = (client: ClientWrapper) => new ClientState.Tiled(this.world, client, desktop!.grid);
+            if (kwinClient.minimized) {
+                constructState = (client: ClientWrapper) => new ClientState.TiledMinimized(this.world, client);
+            } else {
+                Clients.makeTileable(kwinClient);
+                console.assert(Clients.canTileNow(kwinClient));
+                constructState = (client: ClientWrapper) => new ClientState.Tiled(this.world, client, desktop!.grid);
+            }
         } else {
             constructState = (client: ClientWrapper) => new ClientState.Floating(this.world, client, this.config, false);
         }
